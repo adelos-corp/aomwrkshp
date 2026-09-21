@@ -1,0 +1,3 @@
+import Link from "next/link";
+import LoginForm from "./LoginForm";
+export default function Login(){return <main className="site"><nav className="nav" style={{position:"static"}}><div className="mark">THE ART OF MAKING</div><Link className="nav-login" href="/">Back</Link></nav><section className="section" style={{minHeight:"80vh"}}><div className="section-grid"><div className="eyebrow">Workshop access</div><div><h2>Welcome back.</h2><p className="lead">Sign in to reach your workshop space.</p><LoginForm /></div></div></section></main>}

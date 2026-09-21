@@ -1,0 +1,3 @@
+import Link from "next/link";
+import RegisterForm from "./RegisterForm";
+export default function Register(){return <main className="site"><nav className="nav" style={{position:"static"}}><div className="mark">THE ART OF MAKING</div><Link className="nav-login" href="/login">Login</Link></nav><section className="section" style={{minHeight:"80vh"}}><div className="section-grid"><div className="eyebrow">Join the workshop</div><div><h2>Make something real.</h2><p className="lead">Create your account to enter the workshop.</p><RegisterForm /></div></div></section></main>}
