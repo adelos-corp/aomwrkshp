@@ -7,6 +7,8 @@ const supabaseKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export async function middleware(request: NextRequest) {
+  // Keep public pages available even if production auth configuration is missing.
+  // Auth will be enabled automatically once the Supabase variables are present.
   if (!supabaseUrl || !supabaseKey) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
