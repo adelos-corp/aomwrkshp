@@ -1,0 +1,10 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
+export default function RegisterForm() {
+  const router=useRouter(); const [form,setForm]=useState({name:"",email:"",college:"",year:"",password:""}); const [error,setError]=useState(""); const [busy,setBusy]=useState(false);
+  function setField(key:keyof typeof form,value:string){setForm(v=>({...v,[key]:value}));}
+  async function submit(e:React.FormEvent){e.preventDefault();setBusy(true);setError("");const result=await createClient().auth.signUp({email:form.email,password:form.password,options:{data:{full_name:form.name,college:form.college,year_of_study:form.year}}});if(result.error){setError(result.error.message);setBusy(false);return;}if(result.data.session)router.push("/dashboard");else router.push("/login?registered=1");}
+  return <form onSubmit={submit} style={{maxWidth:520,display:"grid",gap:14,marginTop:36}}>{[["name","Full name"],["email","Email"],["college","College"],["year","Year of study"]].map(([k,p])=><input key={k} value={form[k as keyof typeof form]} onChange={e=>setField(k as keyof typeof form,e.target.value)} placeholder={p} type={k==="email"?"email":"text"} required style={{padding:16,borderRadius:12,border:"1px solid var(--line)",background:"transparent"}}/>)}<input value={form.password} onChange={e=>setField("password",e.target.value)} placeholder="Create a password" type="password" required minLength={8} style={{padding:16,borderRadius:12,border:"1px solid var(--line)",background:"transparent"}}/>{error&&<p style={{color:"var(--accent)",margin:0}}>{error}</p>}<button className="cta" disabled={busy} style={{border:0,cursor:"pointer",justifyContent:"center"}}>{busy?"Creating…":"Create account"}</button></form>;
+}
